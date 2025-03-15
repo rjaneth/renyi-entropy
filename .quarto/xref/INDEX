@@ -1,0 +1,17 @@
+{
+  "template.qmd": {
+    "template.tex": "29e5433f"
+  },
+  "ieee-template.qmd": {
+    "ieee-template.tex": "374dc3f9"
+  },
+  "R0-Igarss.qmd": {
+    "R0-Igarss.tex": "2f603f2d"
+  },
+  "R0-MIGARS_2025.qmd": {
+    "R0-MIGARS_2025.tex": "c751e67c"
+  },
+  "R0-Renyi-entropy-sar.qmd": {
+    "R0-Renyi-entropy-sar.tex": "b203f02f"
+  }
+}
