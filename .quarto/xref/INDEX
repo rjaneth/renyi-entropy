@@ -13,5 +13,17 @@
   },
   "R0-Renyi-entropy-sar.qmd": {
     "R0-Renyi-entropy-sar.tex": "b203f02f"
+  },
+  "R0-Renyi-entropy-sar1.qmd": {
+    "R0-Renyi-entropy-sar1.tex": "47ff7edb"
+  },
+  "R1-Renyi-entropy-sar.qmd": {
+    "R1-Renyi-entropy-sar.tex": "07fc453f"
+  },
+  "R1-Renyi-entropy-sar_1.qmd": {
+    "R1-Renyi-entropy-sar_1.tex": "5bdb6dd1"
+  },
+  "Quantifying-Heterogeneity-in-SAR-Imagery-with-the-Rényi-Entropy.qmd": {
+    "Quantifying-Heterogeneity-in-SAR-Imagery-with-the-Rényi-Entropy.tex": "9bd3d001"
   }
 }

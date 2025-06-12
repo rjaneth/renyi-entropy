@@ -379,7 +379,9 @@ generate_plot_renyi <- function(results_df, alpha_values, selected_estimators, n
       geom_point(size = 3.2) +  # Aumenta el tamaño de los puntos
       geom_line(linetype = "solid", linewidth = 1.5, alpha = 0.8) +  # Aumenta el grosor de la línea
       labs(y = "Bias", x = expression(italic(n))) +
-      scale_x_continuous(breaks = unique(df_filtered$n)) +
+      #scale_x_continuous(breaks = unique(df_filtered$n)) +
+      scale_x_continuous(breaks = unique(df_filtered$n), minor_breaks = NULL)+
+      scale_y_continuous(minor_breaks = NULL)+
       scale_color_manual(values = c("blue", "red"), labels = TeX(df_filtered$Estimator)) +
       ggtitle(bquote(lambda == .(alpha_val))) +
       theme_minimal() +
@@ -398,7 +400,9 @@ generate_plot_renyi <- function(results_df, alpha_values, selected_estimators, n
       geom_point(size = 3.2) +
       geom_line(linetype = "solid", linewidth = 1.5, alpha = 0.8) +
       labs(y = "MSE", x = expression(italic(n))) +
-      scale_x_continuous(breaks = unique(df_filtered$n)) +
+      #scale_x_continuous(breaks = unique(df_filtered$n)) +
+      scale_x_continuous(breaks = unique(df_filtered$n), minor_breaks = NULL)+
+      scale_y_continuous(minor_breaks = NULL)+
       scale_color_manual(values = c("blue", "red"), labels = TeX(df_filtered$Estimator)) +
       theme_minimal() +
       theme(text = element_text(family = "serif"),

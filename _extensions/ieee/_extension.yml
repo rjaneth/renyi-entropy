@@ -51,8 +51,7 @@ contributes:
         \usepackage{physics}
         \usepackage[version=3]{mhchem}
         \usepackage{orcidlink}
-        \usepackage{float}
-        \floatplacement{table}{htb}
+        \usepackage{float} 
     html:
       toc: true
       toc-location: left

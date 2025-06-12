@@ -53,188 +53,94 @@ normalize <- function(img) {
   (img - min(img)) / (max(img) - min(img))
 }
 
-# -------------------------------------------------------
-# 2) plot.imagematrix: sin márgenes, con barra a la derecha,
-#    y posibilidad de "encoger" la barra con legend_shrink
-
-# plot.imagematrix <- function(x, 
-#                              significance_level = 0.05, 
-#                              ncolors           = 200,
-#                              palette_colors    = viridis(ncolors, option = "B"), 
-#                              legend_shrink     = 0.9,
-#                              ...) {
-#   
-#   # Rango de valores
-#   zlim <- c(0, 1)
-#   
-#   # Creamos los breaks y labels que incluyan significance_level
-#   base_breaks <- seq(0, 1, by = 0.2)
-#   all_breaks  <- sort(unique(c(base_breaks, significance_level)))
-#   all_labels  <- as.character(all_breaks)
-#   
-#   # Layout a 2 columnas: la imagen (ancho 5) y la barra (ancho 1)
-#   layout(matrix(c(1, 2), nrow = 1), widths = c(7, 1)) 
-#   # ↑ Si ves que sigue muy pegada, prueba widths=c(6,1) u otro valor mayor.
-#   
-#   # Panel 1: imagen sin márgenes
-#   par(mar = c(0, 0, 0, 0))
-#   image(x = 1:ncol(x),
-#         y = 1:nrow(x),
-#         z = t(x[nrow(x):1, , drop=FALSE]),
-#         col    = palette_colors,
-#         zlim   = zlim,
-#         axes   = FALSE,  
-#         xlab   = "", 
-#         ylab   = "",
-#         asp    = 1,      
-#         ...)
-#   
-#   # Panel 2: barra de color, ajustando márgenes
-#   par(mar = c(1, 0, 1, 0))  
-#   # ↑ Ajusta según la separación que necesites
-#   
-#   image.plot(
-#     zlim         = zlim,
-#     legend.only  = TRUE,
-#     col          = palette_colors,
-#     legend.width = 5,
-#     horizontal   = FALSE,
-#     axis.args    = list(
-#       at     = all_breaks,
-#       labels = all_labels,
-#       cex.axis = 2.4  # ↑ Tamaño de las etiquetas numéricas de la barra
-#     ),
-#     legend.shrink = legend_shrink
-#   )
-# }
-# 
-# 
-# # -------------------------------------------------------
-# # 3) Funciones para GUARDAR la imagematrix en PNG/EPS
-# #    usando exactamente el plot.imagematrix anterior.
-# 
-# ### Added by Alejandro C. Frery
-# ### 24 April 2014
-# imagematrixPNG <- function(x, name,
-#                            significance_level = 0.05,
-#                            ncolors           = 200,
-#                            palette_colors    = viridis(ncolors, option = "B"),
-#                            legend_shrink     = 0.9,
-#                            extra_width       = 200,  # espacio extra p/ la barra
-#                            ...) {
-#   
-#   # Dimensiones base: ancho = ncol(x), alto = nrow(x)
-#   w <- ncol(x)
-#   h <- nrow(x)
-#   
-#   # Sumamos 'extra_width' para dar espacio a la barra de color
-#   png(file = name, width = w + extra_width, height = h)
-#   
-#   # Llamamos a plot.imagematrix con los mismos parámetros
-#   plot(x, 
-#        significance_level = significance_level,
-#        ncolors            = ncolors,
-#        palette_colors     = palette_colors,
-#        legend_shrink      = legend_shrink,
-#        ...)
-#   
-#   dev.off()
-# }
 
 
-
-
-# Instala colorspace si no lo tienes
-library(fields)
-library(colorspace)  # NUEVO: para usar terrain_hcl
-
-# Función para definir la paleta de colores deseada
-get_palette <- function(palette_name, ncolors = 200) {
-  if (palette_name == "terrain_hcl") {
-    return(sequential_hcl(ncolors, palette = "terrain_hcl"))
-  } else {
-    stop("Paleta no válida. Usa 'terrain_hcl' para la paleta verde-marrón-azul.")
-  }
-}
-
-# -------------------------------------------------------
-# 🔹 plot.imagematrix modificado para usar terrain_hcl
-plot.imagematrix <- function(x, 
-                             significance_level = 0.05, 
-                             ncolors = 200,
-                             palette_name = "terrain_hcl",  # Default: Terrain HCL
-                             legend_shrink = 0.9,
-                             legend_width  = 2.4,
+plot.imagematrix <- function(x,
+                             significance_level = 0.05,
+                             ncolors           = 200,
+                             palette_colors    = viridis(ncolors, option = "B"),
+                             legend_shrink     = 0.9,
                              ...) {
-  
-  # Obtener la paleta de colores
-  color_palette <- get_palette(palette_name, ncolors)
-  
+
   # Rango de valores
   zlim <- c(0, 1)
-  
-  # Breaks para la barra
+
+ 
   base_breaks <- seq(0, 1, by = 0.2)
   all_breaks  <- sort(unique(c(base_breaks, significance_level)))
   all_labels  <- as.character(all_breaks)
+
   
-  # Layout con imagen y barra de color
-  layout(matrix(c(1,2), nrow=1), widths=c(4, legend_width))
+  layout(matrix(c(1, 2), nrow = 1), widths = c(7, 1))
   
-  # Panel 1: imagen sin márgenes
-  par(mar=c(0,0,0,0))
+
+  
+  par(mar = c(0, 0, 0, 0))
   image(x = 1:ncol(x),
         y = 1:nrow(x),
         z = t(x[nrow(x):1, , drop=FALSE]),
-        col    = color_palette,
+        col    = palette_colors,
         zlim   = zlim,
         axes   = FALSE,
-        xlab   = "", 
+        xlab   = "",
         ylab   = "",
         asp    = 1,
         ...)
-  
-  # Panel 2: barra de color
-  par(mar=c(0,0,0,0))
-  image.plot(zlim = zlim,
-             legend.only = TRUE,
-             col = color_palette,
-             horizontal = FALSE,
-             axis.args = list(
-               at     = all_breaks,
-               labels = all_labels
-             ),
-             legend.shrink = legend_shrink,
-             legend.width  = legend_width)
+
+  # Panel 2
+  par(mar = c(1, 0, 1, 0))
+  # 
+
+  image.plot(
+    zlim         = zlim,
+    legend.only  = TRUE,
+    col          = palette_colors,
+    legend.width = 5,
+    horizontal   = FALSE,
+    axis.args    = list(
+      at     = all_breaks,
+      labels = all_labels,
+      cex.axis = 2.4  # ↑ Tamaño de las etiquetas numéricas de la barra
+    ),
+    legend.shrink = legend_shrink
+  )
 }
 
-# -------------------------------------------------------
-# 🔹 Función para guardar PNG con terrain_hcl
-imagematrixPNG <- function(x, filename,
+
+
+
+### Added by Alejandro C. Frery
+### 24 April 2014
+imagematrixPNG <- function(x, name,
                            significance_level = 0.05,
-                           ncolors = 200,
-                           palette_name = "terrain_hcl",
-                           legend_shrink = 0.9,
-                           legend_width  = 1.3,
-                           extra_width   = 200,
-                           res = 72,
+                           ncolors           = 200,
+                           palette_colors    = viridis(ncolors, option = "B"),
+                           legend_shrink     = 0.9,
+                           extra_width       = 200,  # espacio extra p/ la barra
                            ...) {
-  
+
+  # Dimensiones base: ancho = ncol(x), alto = nrow(x)
   w <- ncol(x)
   h <- nrow(x)
+
   
-  png(filename, width=w + extra_width, height=h, res=res)
-  
-  plot.imagematrix(x, 
-                   significance_level = significance_level,
-                   ncolors = ncolors,
-                   palette_name = palette_name,
-                   legend_shrink = legend_shrink,
-                   legend_width  = legend_width,
-                   ...)
-  
+  png(file = name, width = w + extra_width, height = h)
+
+ 
+  plot(x,
+       significance_level = significance_level,
+       ncolors            = ncolors,
+       palette_colors     = palette_colors,
+       legend_shrink      = legend_shrink,
+       ...)
+
   dev.off()
 }
+
+
+
+
+
 
 
 
@@ -263,9 +169,7 @@ imagematrixEPS <- function(x, name,
   dev.off()
 }
 
-# (Si quieres también un PDF, puedes crear imagematrixPDF análogo.)
-# -------------------------------------------------------
-# 4) Funciones de ecualización (por si las usas):
+
 equalize <- function(imagem) {
   imagemeq <- ecdf(imagem)(imagem)
   dim(imagemeq) <- dim(imagem)
@@ -293,7 +197,7 @@ normalize_indep <- function(imagem) {
 }
 
 # -------------------------------------------------------
-# EJEMPLO DE USO (descomenta para probar):
+# EJEMPLO DE USO 
 #
 # # 1) Generamos matriz de p-valores
 # p_vals <- matrix(runif(600*800, 0, 1), 600, 800)
